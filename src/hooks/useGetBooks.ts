@@ -8,6 +8,7 @@ export const useGetBooks = () => {
 
   const fetchBooks = async () => {
     const booksFromBack = await dataService.getBooks();
+
     setBooks(booksFromBack);
   };
   return {

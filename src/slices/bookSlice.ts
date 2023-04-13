@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { BooksDto } from '../types'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { DataService } from '../api/services/DataService'
 
+const dataService = new DataService();
 
-// export const fetchBooks = createAsyncThunk(
-//     '@@books/fetchBooks',
-//     async function() {
-//         const response = await 
-//     }
-// )
+export const fetchBooks1 = createAsyncThunk(
+    '@@books/fetchBooks',
+    async () => {
+        const books = await dataService.getBooks()
+
+        return books
+    }
+)
 
 const initialState: BooksDto[]  = []
 
@@ -17,11 +21,22 @@ const bookSlice = createSlice({
     initialState,
     reducers: {
         addBooks: (state, action: PayloadAction<BooksDto[]>) => {
-            return state = action.payload
+            state = action.payload
+            window.localStorage.books = JSON.stringify(state)
+            return state
         }
     },
-    extraReducers: {
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchBooks1.pending, (state, action) => {
+                
+            })
+            .addCase(fetchBooks1.fulfilled, (state, action) => {
+                return state = action.payload
+            })
+            .addCase(fetchBooks1.rejected, (state, action) => {
 
+            })
     }
 })
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useGetBooks } from "../../hooks/useGetBooks";
-import { addBooks } from '../../slices/bookSlice';
+import { addBooks, fetchBooks1 } from '../../slices/bookSlice';
 import BookCard from '../bookCard/BookCard';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 
@@ -14,11 +14,11 @@ export const BooksList = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(addBooks(books)) 
+    dispatch(fetchBooks1()) 
   }, [books]);
     
   return (
-    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '10px'}}>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
       {bookZZZ}
     </div>
   )
