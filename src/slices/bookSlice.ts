@@ -16,12 +16,16 @@ export const fetchBooks = createAsyncThunk(
 
 interface StateProps {
     booksList: BooksDto[],
-    bookInfo: string,
+    bookInfo: BooksDto,
 }
 
 const initialState: StateProps  = {
     booksList: [],
-    bookInfo: ''
+    bookInfo: {
+        authors: [],
+        numberOfPages: 0,
+        title: '',
+    }
 }
 
 const bookSlice = createSlice({
@@ -35,6 +39,7 @@ const bookSlice = createSlice({
             state.booksList = state.booksList.filter(item => action.payload != item.title)
         },
         getBookInfo: (state, action) => {
+            state.bookInfo = state.booksList.find(item => item.title === action.payload)
             
         }
     },
