@@ -5,7 +5,7 @@ import { DataService } from '../api/services/DataService'
 
 const dataService = new DataService();
 
-export const fetchBooks1 = createAsyncThunk(
+export const fetchBooks = createAsyncThunk(
     '@@books/fetchBooks',
     async () => {
         const books = await dataService.getBooks()
@@ -28,13 +28,13 @@ const bookSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchBooks1.pending, (state, action) => {
+            .addCase(fetchBooks.pending, (state, action) => {
                 
             })
-            .addCase(fetchBooks1.fulfilled, (state, action) => {
+            .addCase(fetchBooks.fulfilled, (state, action) => {
                 return state = action.payload
             })
-            .addCase(fetchBooks1.rejected, (state, action) => {
+            .addCase(fetchBooks.rejected, (state, action) => {
 
             })
     }

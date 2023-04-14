@@ -4,7 +4,7 @@ export const books: BooksDto[] = [
   {
     authors: [{ name: "Хавербеке", surname: "Марейн" }],
     numberOfPages: 480,
-    title: "Выразительный JavaScript. Современное веб-программирование",
+    title: "Выразительный JavaScript",
     publishingHouse: "Питер",
     releaseDate: "2003",
     publishingDate: "2021",
@@ -14,7 +14,7 @@ export const books: BooksDto[] = [
   {
     authors: [{ name: "Алексей", surname: "Васильев" }],
     numberOfPages: 700,
-    title: "JavaScript в примерах и задачах",
+    title: "JavaScript в примерах",
     publishingHouse: "Эксмо",
     releaseDate: "2017",
     publishingDate: "2022",
@@ -23,7 +23,7 @@ export const books: BooksDto[] = [
   {
     authors: [{ name: "Кэй", surname: "Хорстман" }],
     numberOfPages: 288,
-    title: "Современный JavaScript для нетерпеливых",
+    title: "Современный JavaScript",
     publishingHouse: "Питер",
     releaseDate: "2021",
     publishingDate: "2021",
@@ -46,7 +46,7 @@ export const books: BooksDto[] = [
       { name: "Ева", surname: "Порселло " },
     ],
     numberOfPages: 320,
-    title: "React: современные шаблоны для разработки приложений 2-е издание ",
+    title: "React: современные шаблоны",
     publishingHouse: "Питер",
     releaseDate: "2017",
     publishingDate: "2021",
