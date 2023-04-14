@@ -8,7 +8,9 @@ module.exports = (env, options) =>
     return {
         mode: options.mode,
         entry: entryConfig,
-        devServer,
+        devServer : {
+            historyApiFallback: true,
+          },
         // Dev only
         // Target must be set to web for hmr to work with .browserlist
         // https://github.com/webpack/webpack-dev-server/issues/2758#issuecomment-710086019
