@@ -14,17 +14,28 @@ export const fetchBooks = createAsyncThunk(
     }
 )
 
-const initialState: BooksDto[]  = []
+interface StateProps {
+    booksList: BooksDto[],
+    bookInfo: string,
+}
+
+const initialState: StateProps  = {
+    booksList: [],
+    bookInfo: ''
+}
 
 const bookSlice = createSlice({
     name: '@@books',
     initialState,
     reducers: {
         addBooks: (state, action: PayloadAction<BooksDto[]>) => {
-            return state = action.payload
+            state.booksList = action.payload
         },
         removeBook: (state, action) => {
-            return state.filter((item) => action.payload != item.title)
+            state.booksList = state.booksList.filter(item => action.payload != item.title)
+        },
+        getBookInfo: (state, action) => {
+            
         }
     },
     extraReducers: (builder) => {
@@ -33,7 +44,7 @@ const bookSlice = createSlice({
                 
             })
             .addCase(fetchBooks.fulfilled, (state, action) => {
-                return state = action.payload
+                state.booksList = action.payload
             })
             .addCase(fetchBooks.rejected, (state, action) => {
 
@@ -43,4 +54,4 @@ const bookSlice = createSlice({
 
 export const bookReducer = bookSlice.reducer;
 
-export const {addBooks, removeBook} = bookSlice.actions;
+export const {addBooks, removeBook, getBookInfo} = bookSlice.actions;

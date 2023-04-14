@@ -16,7 +16,7 @@ export const BookCard: React.FC = ({ numberOfPages, title, authors, image }: Boo
       <p>{numberOfPages + " стр"}</p>
       <p>{authors[0].name}</p>
       <Button type="text">Редактировать</Button>
-      <Button type="text"><Link to='/details'>Детали</Link></Button>
+      <Button type="text"><Link to='/details' state={title}>Детали</Link></Button>
       <Button type="text" onClick={() => dispatch(removeBook(title))}>Удалить</Button>
     </Card>
   )
