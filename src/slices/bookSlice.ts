@@ -21,9 +21,10 @@ const bookSlice = createSlice({
     initialState,
     reducers: {
         addBooks: (state, action: PayloadAction<BooksDto[]>) => {
-            state = action.payload
-            window.localStorage.books = JSON.stringify(state)
-            return state
+            return state = action.payload
+        },
+        removeBook: (state, action) => {
+            return state.filter((item) => action.payload != item.title)
         }
     },
     extraReducers: (builder) => {
@@ -42,4 +43,4 @@ const bookSlice = createSlice({
 
 export const bookReducer = bookSlice.reducer;
 
-export const {addBooks} = bookSlice.actions;
+export const {addBooks, removeBook} = bookSlice.actions;
