@@ -38,9 +38,8 @@ const bookSlice = createSlice({
         removeBook: (state, action) => {
             state.booksList = state.booksList.filter(item => action.payload != item.title)
         },
-        getBookInfo: (state, action) => {
-            state.bookInfo = state.booksList.find(item => item.title === action.payload)
-            
+        sortBooksByName: (state, action) => {
+            state.booksList = state.booksList.sort()
         }
     },
     extraReducers: (builder) => {
@@ -59,4 +58,4 @@ const bookSlice = createSlice({
 
 export const bookReducer = bookSlice.reducer;
 
-export const {addBooks, removeBook, getBookInfo} = bookSlice.actions;
+export const {addBooks, removeBook, sortBooksByName} = bookSlice.actions;

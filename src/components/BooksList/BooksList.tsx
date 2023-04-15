@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { addBooks, fetchBooks } from '../../slices/bookSlice';
-
+import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { nanoid } from '@reduxjs/toolkit'
 import { BookCard } from '../index'
 
 export const BooksList = () => {
-  let books = useAppSelector(state => state.books.booksList);
-  const dispatch = useAppDispatch();
+  const books = useAppSelector(state => state.books.booksList);
 
-  const bookZZZ = books.map((item, idx) => <BookCard key={nanoid()} {...item}/>)
+  const dispatch = useAppDispatch();
+  console.log(books)
+  const bookZZZ = books.map((item) => <BookCard key={nanoid()} {...item}/>)
 
   useEffect(() => {
     if(window.localStorage.booksList) {
@@ -26,8 +27,15 @@ export const BooksList = () => {
 
 
   return (
-    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px'}}>
-      {bookZZZ}
-    </div>
+    <>
+      <div style={{display: 'flex', justifyContent:'space-around', height: '50px', padding: '30px'}}>
+        <Button type="primary">Сортировать по названию</Button>
+        <Button type="primary">Сортировать по году публикации</Button>
+      </div>
+      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px'}}>
+        {bookZZZ}
+      </div>
+    </>
+    
   )
 }
