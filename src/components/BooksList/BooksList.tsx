@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { addBooks, fetchBooks } from '../../slices/bookSlice';
+import { addBooks, fetchBooks, sortBooksByName } from '../../slices/bookSlice';
 import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { nanoid } from '@reduxjs/toolkit'
@@ -19,7 +19,6 @@ export const BooksList = () => {
     } else {
       dispatch(fetchBooks()) 
     }
-    
   }, []);
 
    useEffect(() => {
@@ -30,7 +29,7 @@ export const BooksList = () => {
   return (
     <>
       <div style={{display: 'flex', justifyContent:'space-around', height: '50px', padding: '30px'}}>
-        <Button type="primary">Сортировать по названию</Button>
+        <Button type="primary" onClick={() => dispatch(sortBooksByName())}>Сортировать по названию</Button>
         <Button type="primary">Сортировать по году публикации</Button>
       </div>
       <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px'}}>

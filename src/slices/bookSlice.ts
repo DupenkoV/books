@@ -38,9 +38,24 @@ const bookSlice = createSlice({
         removeBook: (state, action) => {
             state.booksList = state.booksList.filter(item => action.payload != item.title)
         },
-        sortBooksByName: (state, action) => {
-            state.booksList = state.booksList.sort()
-        }
+        sortBooksByName: (state) => {
+            state.booksList = state.booksList.sort((a, b) => {
+                const titleA = a.title.toLowerCase();
+                const titleB = b.title.toLowerCase();
+                if(titleA < titleB) {
+                    return -1
+                }
+                if(titleA > titleB) {
+                    return 1
+                }
+                return 0
+            })
+        },
+        // sortBooksByDate: (state) => {
+        //     state.booksList = state.booksList.sort((a, b) => {
+               
+        //     })
+        // }
     },
     extraReducers: (builder) => {
         builder
