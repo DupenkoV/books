@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { nanoid } from '@reduxjs/toolkit'
 import { BookCard } from '../index'
+import { AddBookCard } from '../index';
 
 export const BooksList = () => {
   const books = useAppSelector(state => state.books.booksList);
@@ -34,6 +35,7 @@ export const BooksList = () => {
       </div>
       <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px'}}>
         {bookZZZ}
+        <AddBookCard />
       </div>
     </>
     
