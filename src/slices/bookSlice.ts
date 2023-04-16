@@ -49,6 +49,9 @@ const bookSlice = createSlice({
         sortBooksState: (state, action) => {
             state.booksList = sortBooks(state.booksList, action.payload.prop, action.payload.dir)
         },
+        addBook: (state, action) => {
+            state.booksList.push(action.payload)
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -66,4 +69,4 @@ const bookSlice = createSlice({
 
 export const bookReducer = bookSlice.reducer;
 
-export const {addBooks, removeBook, sortBooksState} = bookSlice.actions;
+export const {addBooks, removeBook, sortBooksState, addBook} = bookSlice.actions;

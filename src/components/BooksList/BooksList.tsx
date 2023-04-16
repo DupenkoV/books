@@ -10,7 +10,6 @@ export const BooksList = () => {
   const books = useAppSelector(state => state.books.booksList);
 
   const dispatch = useAppDispatch();
-  console.log(books)
   const bookZZZ = books.map((item) => <BookCard key={nanoid()} {...item}/>)
 
   useEffect(() => {

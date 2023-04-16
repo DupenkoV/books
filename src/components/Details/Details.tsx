@@ -1,12 +1,13 @@
 import { Descriptions, Image, Button, Divider  } from 'antd';
 import { useLocation, Link} from 'react-router-dom'
 import { AuthorType } from '../../types'
+import { nanoid } from '@reduxjs/toolkit';
 
 export const Details = () => {
     const titleName = useLocation();
 
     const { authors, numberOfPages, title, image, isbn, publishingDate, publishingHouse, releaseDate } = titleName.state;
-    const authorsName = authors.map(item => <span>{item.name + ' ' + item.surname}</span>)
+    const authorsName = authors.map(item => <span key={nanoid()}>{item.name + ' ' + item.surname}</span>)
     return (
         <>
             <Image src={image} width={200} height={300}/>

@@ -16,7 +16,7 @@ export const SortButtons = () => {
 
     const handleClick = (action: actionProps, dir) => {
         dispatch(sortBooksState(action))
-        dir()
+        dir
     }
 
 
