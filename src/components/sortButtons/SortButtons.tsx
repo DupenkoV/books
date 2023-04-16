@@ -1,28 +1,29 @@
 import React, { useState } from 'react'
 import { Button } from 'antd'
 import { useAppDispatch } from '../../hooks/reduxHooks'
-import { sortBooksByDate, sortBooksByName } from '../../slices/bookSlice'
+import { sortBooksState} from '../../slices/bookSlice'
 
+
+interface actionProps {
+    prop: string;
+    dir: boolean
+}
 
 export const SortButtons = () => {
     const [sortName, setSortName] = useState(false)
     const [sortDate, setSortDate] = useState(false)
     const dispatch = useAppDispatch();
 
-    const handleClickName = () => {
-        dispatch(sortBooksByName({prop: 'title', dir: sortName }))
-        setSortName(!sortName)
+    const handleClick = (action: actionProps, dir) => {
+        dispatch(sortBooksState(action))
+        dir()
     }
 
-    const handleClickDate = () => {
-        dispatch(sortBooksByDate({prop: 'publishingDate', dir: sortDate }))
-        setSortDate(!sortDate)
-    }
 
   return (
     <div style={{display: 'flex', justifyContent:'space-around', height: '50px', padding: '30px'}}>
-        <Button type="primary" onClick={handleClickName}>Сортировать по названию</Button>
-        <Button type="primary" onClick={handleClickDate}>Сортировать по году публикации</Button>
-  </div>
+        <Button type="primary" onClick={() => handleClick({prop: 'title', dir: sortName}, setSortName(!sortName))}>Сортировать по названию</Button>
+        <Button type="primary" onClick={() => handleClick({prop: 'publishingDate', dir: sortDate}, setSortDate(!sortDate))}>Сортировать по году публикации</Button>
+    </div>
   )
 }
