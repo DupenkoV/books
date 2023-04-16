@@ -14,6 +14,7 @@ export const BooksList = () => {
 
   useEffect(() => {
     if(window.localStorage.booksList) {
+      if(JSON.parse(window.localStorage.getItem('booksList')).length > books.length)
       dispatch(addBooks(JSON.parse(window.localStorage.getItem('booksList'))))
     } else {
       dispatch(fetchBooks()) 

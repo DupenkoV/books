@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 
 export const Layout = () => {
-  const dispatch = useAppDispatch();
 
   return (
     <>

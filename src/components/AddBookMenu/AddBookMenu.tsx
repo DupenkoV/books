@@ -9,19 +9,34 @@ import {
 import { useLocation, Link} from 'react-router-dom'
 import { addBook } from '../../slices/bookSlice'; 
 import { useAppDispatch } from '../../hooks/reduxHooks';
+import { BooksDto } from '../../types';
 
 export const AddBookMenu: React.FC = () => {
     const bookDetails = useLocation()
+    const [newBook, setNewBook] = useState<BooksDto>({
+        title: bookDetails?.state?.title || '',
+        numberOfPages: bookDetails?.state?.numberOfPages || 13,
+        authors: bookDetails?.state?.authors || [{name: 's', surname: 'a'}],
+        isbn: bookDetails?.state?.isbn || '',
+        publishingHouse: bookDetails?.state?.publishingHouse || '',
+        publishingDate: bookDetails?.state?.publishingDate || '',
+        releaseDate: bookDetails?.state?.releaseDate || '',
+        image: bookDetails?.state?.image || ''
+    })
     const dispatch = useAppDispatch();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        console.log(1)
+        dispatch(addBook(newBook))
+    }
 
-        const formData = new FormData(e.target as HTMLFormElement)
-        console.log(formData.get('title'))
-
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        
+        setNewBook({...newBook, [e.target.name]: e.target.value})
     }
 
   return (
+    <>
     <Form
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
@@ -30,13 +45,13 @@ export const AddBookMenu: React.FC = () => {
       onFinish={handleSubmit}
     >
       <Form.Item label="Название книги" >
-        <Input value={bookDetails?.state?.title} />
+        <Input value={newBook.title} name='title' onChange={handleChange}/>
       </Form.Item>
       <Form.Item label="Кол-во страниц">
-        <InputNumber value={bookDetails?.state?.numberOfPages}/>
+        <InputNumber value={newBook.numberOfPages} name='numberOfPages'/>
       </Form.Item>
       <Form.Item label="Издательство">
-        <Input value={bookDetails?.state?.publishingHouse}/>
+        <Input value={newBook.publishingHouse} name='publishingHouse' onChange={handleChange}/>
       </Form.Item>
       <Form.Item label="Год публикации">
         <DatePicker />
@@ -45,12 +60,15 @@ export const AddBookMenu: React.FC = () => {
         <DatePicker />
       </Form.Item>
       <Form.Item label="ISBN">
-        <Input value={bookDetails?.state?.isbn}/>
+        <Input value={newBook.isbn} name='isbn' onChange={handleChange}/>
       </Form.Item>
       <Form.Item label="Авторы">
-        <Input />
+        <Input value={newBook.authors.join()} name='authors' onChange={handleChange}/>
       </Form.Item>
       <Button type='primary' htmlType="submit">Добавить книгу</Button>
     </Form>
-  );
+    <Link to='/'><Button type="primary" style={{marginTop: 40}}>Назад</Button></Link>
+ 
+    </>
+    );
 };
