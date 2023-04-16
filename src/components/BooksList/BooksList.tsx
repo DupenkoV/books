@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { addBooks, fetchBooks, sortBooksByName } from '../../slices/bookSlice';
+import { addBooks, fetchBooks, sortBooksByName, sortBooksByDate } from '../../slices/bookSlice';
 import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { nanoid } from '@reduxjs/toolkit'
-import { BookCard } from '../index'
+import { BookCard, SortButtons } from '../index'
 import { AddBookCard } from '../index';
 
 export const BooksList = () => {
@@ -28,10 +28,7 @@ export const BooksList = () => {
 
   return (
     <>
-      <div style={{display: 'flex', justifyContent:'space-around', height: '50px', padding: '30px'}}>
-        <Button type="primary" onClick={() => dispatch(sortBooksByName())}>Сортировать по названию</Button>
-        <Button type="primary">Сортировать по году публикации</Button>
-      </div>
+      <SortButtons />
       <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px'}}>
         {bookZZZ}
         <AddBookCard />

@@ -28,6 +28,14 @@ const initialState: StateProps  = {
     }
 }
 
+function sortBooks(arr: BooksDto[], prop: string, dir = false) {
+    let result = arr.sort((a, b) => {
+        if((dir == false ? a[prop] < b[prop] : a[prop] > b[prop]) == true) return -1
+    })
+    return result
+}
+
+
 const bookSlice = createSlice({
     name: '@@books',
     initialState,
@@ -38,24 +46,12 @@ const bookSlice = createSlice({
         removeBook: (state, action) => {
             state.booksList = state.booksList.filter(item => action.payload != item.title)
         },
-        sortBooksByName: (state) => {
-            state.booksList = state.booksList.sort((a, b) => {
-                const titleA = a.title.toLowerCase();
-                const titleB = b.title.toLowerCase();
-                if(titleA < titleB) {
-                    return -1
-                }
-                if(titleA > titleB) {
-                    return 1
-                }
-                return 0
-            })
+        sortBooksByName: (state, action) => {
+            state.booksList = sortBooks(state.booksList, action.payload.prop, action.payload.dir)
         },
-        // sortBooksByDate: (state) => {
-        //     state.booksList = state.booksList.sort((a, b) => {
-               
-        //     })
-        // }
+        sortBooksByDate: (state, action) => {
+            state.booksList = sortBooks(state.booksList, action.payload.prop, action.payload.dir)
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -73,4 +69,4 @@ const bookSlice = createSlice({
 
 export const bookReducer = bookSlice.reducer;
 
-export const {addBooks, removeBook, sortBooksByName} = bookSlice.actions;
+export const {addBooks, removeBook, sortBooksByName, sortBooksByDate} = bookSlice.actions;

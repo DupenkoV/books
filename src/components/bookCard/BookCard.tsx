@@ -11,7 +11,7 @@ export const BookCard: React.FC = (item: BooksDto) => {
   const dispatch = useAppDispatch();
 
   return (
-    <Card title={title} bordered={true} style={{ width: 350 }} >
+    <Card title={title} bordered={true} style={{ width: 350, height: 460 }} >
       <Image src={image} height={200} alt='book'/>
       <p>{title}</p>
       <p>{numberOfPages + " стр"}</p>
