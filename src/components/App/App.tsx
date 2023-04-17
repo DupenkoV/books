@@ -13,8 +13,8 @@ export const App = () => {
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route index element={<BooksList />} />
-        <Route path='/details' element={<Details />} />
-        <Route path='/addBookMenu' element={<AddBookMenu />} />
+        <Route path='details/:id' element={<Details />} />
+        <Route path='addBookMenu' element={<AddBookMenu />} />
       </Route>
     </Routes>
   );
