@@ -1,24 +1,16 @@
 import { Descriptions, Image, Button, Divider  } from 'antd';
-import { useLocation, Link, useSearchParams, useParams} from 'react-router-dom'
-import { AuthorType } from '../../types'
-import { nanoid } from '@reduxjs/toolkit';
+import { Link, useParams} from 'react-router-dom'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getBookDetails, addBooks } from '../../slices/bookSlice';
 import { useAppSelector } from '../../hooks/reduxHooks';
-import { fetchBooks } from '../../slices/bookSlice'; 
+import { getBookById } from '../../hooks/getBookById'; 
+
 
 export const Details = () => {
-    const {id} = useParams();
-    console.log(id)
-    const dispatch = useDispatch();
-    console.log(useAppSelector(state => state.books.bookInfo))
-    const {numberOfPages, title, publishingHouse, image, isbn, publishingDate, releaseDate} = useAppSelector(state => state.books.bookInfo)
 
-    useEffect(() => {
-        dispatch(addBooks(JSON.parse(window.localStorage.getItem('booksList'))))
-        dispatch(getBookDetails(id))
-    }, [])
+    const {numberOfPages, title, publishingHouse, image, isbn, publishingDate, releaseDate} = getBookById()
+
 
     return (
         <>

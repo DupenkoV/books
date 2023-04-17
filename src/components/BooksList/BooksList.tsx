@@ -1,14 +1,13 @@
-import { useEffect } from "react";
-import { addBooks, fetchBooks } from '../../slices/bookSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { useAppSelector } from '../../hooks/reduxHooks';
 import { BookCard, SortButtons } from '../index'
 import { AddBookCard } from '../index';
+import { useEffect } from 'react'; 
+import { addBooks,fetchBooks } from '../../slices/bookSlice';
+import { useAppDispatch } from '../../hooks/reduxHooks'; 
 
 export const BooksList = () => {
   const books = useAppSelector(state => state.books.booksList);
-
   const dispatch = useAppDispatch();
-  const bookZZZ = books.map((item) => <BookCard key={item.id} {...item}/>)
 
   useEffect(() => {
     if(window.localStorage.booksList) {
@@ -23,12 +22,11 @@ export const BooksList = () => {
     window.localStorage.booksList = JSON.stringify(books)
   }, [books])
 
-
   return (
     <>
       <SortButtons />
       <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px'}}>
-        {bookZZZ}
+        {books.map((item) => <BookCard key={item.id} {...item}/>)}
         <AddBookCard />
       </div>
     </>

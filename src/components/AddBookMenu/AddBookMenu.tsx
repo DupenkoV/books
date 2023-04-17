@@ -6,26 +6,31 @@ import {
   Input,
   InputNumber,
 } from 'antd';
-import { useLocation, Link} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { addBook } from '../../slices/bookSlice'; 
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { BooksDto } from '../../types';
 import { nanoid } from '@reduxjs/toolkit';
+import { getBookById } from '../../hooks/getBookById';
+
 
 export const AddBookMenu: React.FC = () => {
-    const bookDetails = useLocation()
-    const [newBook, setNewBook] = useState<BooksDto>({
-        title: bookDetails?.state?.title || '',
-        numberOfPages: bookDetails?.state?.numberOfPages || 13,
-        authors: bookDetails?.state?.authors || [{name: 's', surname: 'a'}],
-        isbn: bookDetails?.state?.isbn || '',
-        publishingHouse: bookDetails?.state?.publishingHouse || '',
-        publishingDate: bookDetails?.state?.publishingDate || '',
-        releaseDate: bookDetails?.state?.releaseDate || '',
-        image: bookDetails?.state?.image || '',
-        id: bookDetails?.state?.image || nanoid()
-    })
+  
+
+    const {numberOfPages, title, publishingHouse, image, isbn, publishingDate, releaseDate, id, authors} = getBookById()
     const dispatch = useAppDispatch();
+    const [newBook, setNewBook] = useState<BooksDto>({
+        title,
+        numberOfPages,
+        authors,
+        isbn,
+        publishingHouse,
+        publishingDate,
+        releaseDate,
+        image,
+        id,
+    })
+
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         console.log(1)
@@ -33,7 +38,8 @@ export const AddBookMenu: React.FC = () => {
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        
+      console.log(e.target.name)
+      console.log(e.target.value)
         setNewBook({...newBook, [e.target.name]: e.target.value})
     }
 
@@ -47,13 +53,13 @@ export const AddBookMenu: React.FC = () => {
       onFinish={handleSubmit}
     >
       <Form.Item label="Название книги" >
-        <Input value={newBook.title} name='title' onChange={handleChange}/>
+        <Input value={title} name='title' onChange={handleChange}/>
       </Form.Item>
       <Form.Item label="Кол-во страниц">
-        <InputNumber value={newBook.numberOfPages} name='numberOfPages'/>
+        <InputNumber value={numberOfPages} name='numberOfPages'/>
       </Form.Item>
       <Form.Item label="Издательство">
-        <Input value={newBook.publishingHouse} name='publishingHouse' onChange={handleChange}/>
+        <Input value={publishingHouse} name='publishingHouse' onChange={handleChange}/>
       </Form.Item>
       <Form.Item label="Год публикации">
         <DatePicker />
@@ -62,7 +68,7 @@ export const AddBookMenu: React.FC = () => {
         <DatePicker />
       </Form.Item>
       <Form.Item label="ISBN">
-        <Input value={newBook.isbn} name='isbn' onChange={handleChange}/>
+        <Input value={isbn} name='isbn' onChange={handleChange}/>
       </Form.Item>
       <Form.Item label="Авторы">
         <Input value={newBook.authors.join()} name='authors' onChange={handleChange}/>

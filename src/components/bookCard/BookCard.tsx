@@ -16,7 +16,7 @@ export const BookCard: React.FC = (item: BooksDto) => {
       <p>{title}</p>
       <p>{numberOfPages + " стр"}</p>
       <p>{authors[0].name}</p>
-      <Link to='/addBookMenu' state={{...item}}><Button type="text">Редактировать</Button></Link>
+      <Link to={`/addBookMenu/${id}`}><Button type="text">Редактировать</Button></Link>
       <Link to={`/details/${id}`}><Button type="text">Детали</Button></Link>
       <Button type="text" onClick={() => dispatch(removeBook(id))}>Удалить</Button>
     </Card>
