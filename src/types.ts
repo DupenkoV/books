@@ -7,6 +7,7 @@ export interface BooksDto {
     publishingDate?: string;
     isbn?: string;
     image?: string;
+    id: string;
 }
 
 export interface AuthorType {

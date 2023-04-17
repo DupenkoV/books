@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { addBooks, fetchBooks } from '../../slices/bookSlice';
-import { Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { nanoid } from '@reduxjs/toolkit'
 import { BookCard, SortButtons } from '../index'
@@ -10,7 +9,7 @@ export const BooksList = () => {
   const books = useAppSelector(state => state.books.booksList);
 
   const dispatch = useAppDispatch();
-  const bookZZZ = books.map((item) => <BookCard key={nanoid()} {...item}/>)
+  const bookZZZ = books.map((item) => <BookCard key={item.id} {...item}/>)
 
   useEffect(() => {
     if(window.localStorage.booksList) {

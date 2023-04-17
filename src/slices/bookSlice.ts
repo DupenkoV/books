@@ -25,6 +25,7 @@ const initialState: StateProps  = {
         authors: [],
         numberOfPages: 0,
         title: '',
+        id: ''
     }
 }
 
@@ -44,7 +45,7 @@ const bookSlice = createSlice({
             state.booksList = action.payload
         },
         removeBook: (state, action) => {
-            state.booksList = state.booksList.filter(item => action.payload != item.title)
+            state.booksList = state.booksList.filter(item => action.payload != item.id)
         },
         sortBooksState: (state, action) => {
             state.booksList = sortBooks(state.booksList, action.payload.prop, action.payload.dir)

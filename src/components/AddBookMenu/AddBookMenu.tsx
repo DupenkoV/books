@@ -10,6 +10,7 @@ import { useLocation, Link} from 'react-router-dom'
 import { addBook } from '../../slices/bookSlice'; 
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { BooksDto } from '../../types';
+import { nanoid } from '@reduxjs/toolkit';
 
 export const AddBookMenu: React.FC = () => {
     const bookDetails = useLocation()
@@ -21,7 +22,8 @@ export const AddBookMenu: React.FC = () => {
         publishingHouse: bookDetails?.state?.publishingHouse || '',
         publishingDate: bookDetails?.state?.publishingDate || '',
         releaseDate: bookDetails?.state?.releaseDate || '',
-        image: bookDetails?.state?.image || ''
+        image: bookDetails?.state?.image || '',
+        id: bookDetails?.state?.image || nanoid()
     })
     const dispatch = useAppDispatch();
 

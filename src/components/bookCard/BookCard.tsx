@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../hooks/reduxHooks';
 import { Link } from 'react-router-dom'
 
 export const BookCard: React.FC = (item: BooksDto) => {
-  const {authors, numberOfPages, title, image} = item;
+  const {authors, numberOfPages, title, image, id} = item;
   const dispatch = useAppDispatch();
 
   return (
@@ -18,7 +18,7 @@ export const BookCard: React.FC = (item: BooksDto) => {
       <p>{authors[0].name}</p>
       <Link to='/addBookMenu' state={{...item}}><Button type="text">Редактировать</Button></Link>
       <Link to='/details' state={{...item}}><Button type="text">Детали</Button></Link>
-      <Button type="text" onClick={() => dispatch(removeBook(title))}>Удалить</Button>
+      <Button type="text" onClick={() => dispatch(removeBook(id))}>Удалить</Button>
     </Card>
   )
 };
