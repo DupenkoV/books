@@ -6,7 +6,7 @@ import { nanoid } from '@reduxjs/toolkit';
 
 
 
-export const getBookById = () => {
+export const useGetBookById = () => {
     
     const {id} = useParams();
     if(id === 'addNewBook') return ({

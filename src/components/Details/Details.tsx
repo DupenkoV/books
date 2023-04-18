@@ -1,15 +1,11 @@
 import { Descriptions, Image, Button, Divider  } from 'antd';
-import { Link, useParams} from 'react-router-dom'
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getBookDetails, addBooks } from '../../slices/bookSlice';
-import { useAppSelector } from '../../hooks/reduxHooks';
-import { getBookById } from '../../hooks/getBookById'; 
+import { Link } from 'react-router-dom'
+import { useGetBookById } from '../../hooks/getBookById'; 
 
 
 export const Details = () => {
 
-    const {numberOfPages, title, publishingHouse, image, isbn, publishingDate, releaseDate} = getBookById()
+    const {numberOfPages, title, publishingHouse, image, isbn, publishingDate, releaseDate} = useGetBookById()
 
 
     return (
