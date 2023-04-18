@@ -11,15 +11,16 @@ export const useGetBookById = () => {
     const {id} = useParams();
     if(id === 'addNewBook') return ({
         title: '',
-        numberOfPages: 13,
-        authors: [{name: 's', surname: 'a'}],
+        numberOfPages: 0,
+        authors: [],
         isbn: '',
         publishingHouse: '',
         publishingDate: '',
         releaseDate: '',
         image: '',
-        id: nanoid()
+        id: ''
     })
+
     const book = useAppSelector(state => state.books.bookInfo)
     const dispatch = useAppDispatch();
     useEffect(() => {

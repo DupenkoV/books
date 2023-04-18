@@ -55,6 +55,18 @@ const bookSlice = createSlice({
         },
         getBookDetails: (state, action) => {
             state.bookInfo = state.booksList.find(item => item.id === action.payload)
+            console.log(state.booksList.find(item => item.id === action.payload))
+        },
+        editBook: (state, action) => {
+            state.booksList = state.booksList.map((item) => {
+                if(item.id === action.payload.id) {
+                    return {
+                        ...action.payload
+                    }
+                }
+                return item
+            })
+            
         }
     },
     extraReducers: (builder) => {
@@ -73,4 +85,4 @@ const bookSlice = createSlice({
 
 export const bookReducer = bookSlice.reducer;
 
-export const {addBooks, removeBook, sortBooksState, addBook, getBookDetails} = bookSlice.actions;
+export const {addBooks, removeBook, sortBooksState, addBook, getBookDetails, editBook} = bookSlice.actions;

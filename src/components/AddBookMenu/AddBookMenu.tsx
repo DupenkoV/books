@@ -12,13 +12,16 @@ import {
 } from "antd";
 import { Link } from "react-router-dom";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { addBook } from "../../slices/bookSlice";
+import { addBook, editBook } from "../../slices/bookSlice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { BooksDto } from "../../types";
 import { nanoid } from "@reduxjs/toolkit";
 import { useGetBookById } from "../../hooks/getBookById";
+import moment from 'moment'
+import dayjs from 'dayjs';
 
 export const AddBookMenu: React.FC = () => {
+
   const {
     numberOfPages,
     title,
@@ -33,6 +36,9 @@ export const AddBookMenu: React.FC = () => {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
+  const button = id ? (<Button type="primary" htmlType="submit" style={{ marginTop: 40 }}>Редактировать книгу</Button>) : (<Button type="primary" htmlType="submit" style={{ marginTop: 40 }}>
+  Добавить книгу
+</Button>)
   // const booksKeys = Object.keys(book);
   //
   // const initialBooksValues = booksKeys.map((item) => {
@@ -49,34 +55,20 @@ export const AddBookMenu: React.FC = () => {
   //   image,
   //   id,
   // });
-  const [newBook, setNewBook] = useState<BooksDto>({
-    numberOfPages,
-    title,
-    publishingHouse,
-    image,
-    isbn,
-    publishingDate,
-    releaseDate,
-    id,
-    authors,
-  });
-  console.log(releaseDate);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(1);
-    // dispatch(addBook(newBook))
-  };
+
+
 
   const onFinish = (values: unknown) => {
-    // if (typeof values === "object") {
-    //   const newValues = { ...values } as BooksDto;
-    // }
-    console.log(values);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
-    setNewBook({ ...newBook, [e.target.name]: e.target.value });
+    if (typeof values === "object") {
+      if(id.length < 1) {
+        const newValues = { ...values, id: nanoid() } as BooksDto;
+        dispatch(addBook({...newValues, image: 'https://dentsg.pro/upload/resize_cache/iblock/6da/cp3qr9pebsoy253ssylnab9nqdlst5ti/800_800_182890484cc09cf4497c75dc9df68fb58/SHlang-dlya-podklyucheniya-DP_2.04-dlya-mikromotora.jpg'}))
+      } else {
+        const newValues = { ...values, id } as BooksDto;
+        dispatch(editBook({...newValues, image}))
+      }
+    }
+    
   };
   useEffect(() => {
     form.setFieldValue("title", title);
@@ -84,7 +76,7 @@ export const AddBookMenu: React.FC = () => {
     form.setFieldValue("publishingHouse", publishingHouse);
     form.setFieldValue("isbn", isbn);
     form.setFieldValue("authors", authors);
-    // form.setFieldValue("publishingDate", publishingDate);
+    // form.setFieldValue("publishingDate", 2021);
     // form.setFieldValue("releaseDate", releaseDate);
   }, [
     title,
@@ -109,7 +101,7 @@ export const AddBookMenu: React.FC = () => {
               <Form.Item
                 label="Название книги"
                 name="title"
-                rules={[{ required: true, message: "Введите название книги" }]}
+                rules={[{ required: true, message: "Введите название книги(не более 30 символов)", max: 30}]}
               >
                 <Input />
               </Form.Item>
@@ -125,7 +117,7 @@ export const AddBookMenu: React.FC = () => {
                   },
                 ]}
               >
-                <InputNumber />
+                <InputNumber min={1} max={10000}/>
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -133,7 +125,7 @@ export const AddBookMenu: React.FC = () => {
                 label="Издательство"
                 name="publishingHouse"
                 rules={[
-                  { required: true, message: "Введите название издательства" },
+                  { required: true, message: "Введите название издательства(не более 30 символов)", max: 30 },
                 ]}
               >
                 <Input />
@@ -177,7 +169,7 @@ export const AddBookMenu: React.FC = () => {
                         name={[name, "name"]}
                         label={"Имя автора"}
                         rules={[
-                          { required: true, message: "Введите имя автора" },
+                          { required: true, message: "Введите имя автора(не более 20 символов)", max: 20 },
                         ]}
                       >
                         <Input />
@@ -186,7 +178,7 @@ export const AddBookMenu: React.FC = () => {
                         name={[name, "surname"]}
                         label={"Фамилия автора"}
                         rules={[
-                          { required: true, message: "Введите фамилию автора" },
+                          { required: true, message: "Введите фамилию автора(не более 20 символов)", max: 20 },
                         ]}
                       >
                         <Input />
@@ -210,9 +202,7 @@ export const AddBookMenu: React.FC = () => {
             );
           }}
         </Form.List>
-        <Button type="primary" htmlType="submit">
-          Добавить книгу
-        </Button>
+        {button}
       </Form>
       <Link to="/">
         <Button type="primary" style={{ marginTop: 40 }}>
