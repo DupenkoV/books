@@ -1,5 +1,5 @@
-import { worker } from "../../mocks/browser";
-import { api } from "../api";
+import { worker } from '../../mocks/browser';
+import { api } from '../api';
 
 export class DataService {
   private isApiAvailable = false;
@@ -10,7 +10,7 @@ export class DataService {
 
   async getBooks() {
     try {
-      const response = await api.get("/books");
+      const response = await api.get('/books');
       if (response.status === 200) {
         return response.data;
       }

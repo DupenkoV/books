@@ -1,15 +1,18 @@
-import { Outlet } from 'react-router-dom'
-import { useAppDispatch } from '../../hooks/reduxHooks'
+import { Outlet } from 'react-router-dom';
 
 export const Layout = () => {
-
   return (
     <>
-        <header style={{height: '100px', display: 'flex', justifyContent: 'space-around', paddingTop: '50px', backgroundColor: 'grey'}}>
-
-        </header>
-        <Outlet />
+      <header
+        style={{
+          height: '100px',
+          display: 'flex',
+          justifyContent: 'space-around',
+          paddingTop: '50px',
+          backgroundColor: 'grey',
+        }}
+      ></header>
+      <Outlet />
     </>
-    
-  )
-}
+  );
+};
