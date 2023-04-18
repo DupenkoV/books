@@ -14,7 +14,7 @@ export const useGetBookById = () => {
   if (id === 'addNewBook')
     return {
       title: '',
-      numberOfPages: 0,
+      numberOfPages: 1,
       authors: [],
       isbn: '',
       publishingHouse: '',
