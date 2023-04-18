@@ -1,6 +1,10 @@
 import { Card, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
+/**
+ * Компонент отвечает за рендеринг карточки добавления книги
+ */
+
 export const AddBookCard = () => {
   return (
     <>

@@ -8,6 +8,10 @@ interface actionProps {
   dir: boolean;
 }
 
+/**
+ * Кнопки, отвечающие за сортировку списка книг. Также, ждя удобства тестирования добавил кнопку очистки LS.
+ */
+
 export const SortButtons = () => {
   const [sortName, setSortName] = useState(false);
   const [sortDate, setSortDate] = useState(false);
@@ -30,14 +34,12 @@ export const SortButtons = () => {
         justifyContent: 'space-around',
         height: '50px',
         padding: '30px',
-      }}
-    >
+      }}>
       <Button
         type="primary"
         onClick={() =>
           handleClick({ prop: 'title', dir: sortName }, setSortName(!sortName))
-        }
-      >
+        }>
         Сортировать по названию
       </Button>
       <Button
@@ -45,10 +47,9 @@ export const SortButtons = () => {
         onClick={() =>
           handleClick(
             { prop: 'publishingDate', dir: sortDate },
-            setSortDate(!sortDate),
+            setSortDate(!sortDate)
           )
-        }
-      >
+        }>
         Сортировать по году публикации
       </Button>
       <Button type="primary" onClick={() => clearLocalStorage()}>

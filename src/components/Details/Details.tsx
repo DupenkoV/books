@@ -2,6 +2,12 @@ import { Descriptions, Image, Button, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import { useGetBookById } from '../../hooks/getBookById';
 
+/**
+ * Компонент отображает детальную информацию о книге.
+ * Детальную информацию он получает из store, предварительно сделав dispatch ID книги, который он получил из URL.
+ * Понимаю, что проще и правильнее было сделать через useSelector. Подно заметил
+ */
+
 export const Details = () => {
   const {
     numberOfPages,

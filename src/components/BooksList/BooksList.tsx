@@ -5,9 +5,17 @@ import { useEffect } from 'react';
 import { addBooks, fetchBooks } from '../../slices/bookSlice';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 
+/**
+ * Компонент отвечает за каталог карточек с книгами и get запрос книг с "бэка".
+ */
+
 export const BooksList = () => {
-  const books = useAppSelector((state) => state.books.booksList);
+  const books = useAppSelector(state => state.books.booksList);
   const dispatch = useAppDispatch();
+
+  /**
+   * в данном эффекте запрос книг с "бэка". Но, т.к. условием задания является хранение данных в LS, то мы изначально узнаем информацию из LS.
+   */
 
   useEffect(() => {
     if (window.localStorage.booksList) {
@@ -16,7 +24,7 @@ export const BooksList = () => {
         books.length
       )
         dispatch(
-          addBooks(JSON.parse(window.localStorage.getItem('booksList'))),
+          addBooks(JSON.parse(window.localStorage.getItem('booksList')))
         );
     } else {
       dispatch(fetchBooks());
@@ -35,9 +43,8 @@ export const BooksList = () => {
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr',
           gap: '10px',
-        }}
-      >
-        {books.map((item) => (
+        }}>
+        {books.map(item => (
           <BookCard key={item.id} {...item} />
         ))}
         <AddBookCard />

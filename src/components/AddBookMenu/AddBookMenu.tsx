@@ -17,9 +17,13 @@ import { useAppDispatch } from '../../hooks/reduxHooks';
 import { BooksDto } from '../../types';
 import { nanoid } from '@reduxjs/toolkit';
 import { useGetBookById } from '../../hooks/getBookById';
-import moment from 'moment';
 import dayjs from 'dayjs';
 const ISBN = require('isbn-validate');
+
+/**
+ * Компонент отвечает за меню добавления/редактирования книг. В зависимости от паарметров перехода по роутам, меняется кнопка редактировать/добавить,
+ * а, также, какое событие будет диспатчится в стор. Привязка к ID параметру, который передается как параметр в URL.
+ */
 
 export const AddBookMenu: React.FC = () => {
   const {
@@ -45,27 +49,23 @@ export const AddBookMenu: React.FC = () => {
       Добавить книгу
     </Button>
   );
-  // const booksKeys = Object.keys(book);
-  //
-  // const initialBooksValues = booksKeys.map((item) => {
-  //   return { name: book[item] };
-  // });
-  // const [newBook, setNewBook] = useState<BooksDto>({
-  //   title,
-  //   numberOfPages,
-  //   authors,
-  //   isbn,
-  //   publishingHouse,
-  //   publishingDate,
-  //   releaseDate,
-  //   image,
-  //   id,
-  // });
+
+  /**
+   * Функций submit. В зависимости от параметра ID, полученного из URL, выполняет несколько разную логику.
+   * При отсутствующем ID выполняется формирование объекта с книгой, присвоение ID и dispatch события addBook. Присваивается картинка-заглушка.
+   * При наличии ID выполняется формирование объекта с книгой и dispatch события editBook. ID остается прежним
+   */
   const onFinish = (values: unknown) => {
     if (typeof values === 'object') {
       if (id.length < 1) {
-        console.log(dayjs(publishingDate).toString());
-        const newValues = { ...values, id: nanoid() } as BooksDto;
+        const newValues = {
+          ...values,
+          id: nanoid(),
+        } as BooksDto;
+        newValues.publishingDate = dayjs(newValues.publishingDate)
+          .year()
+          .toString();
+        newValues.releaseDate = dayjs(newValues.releaseDate).year().toString();
         dispatch(
           addBook({
             ...newValues,
@@ -75,20 +75,34 @@ export const AddBookMenu: React.FC = () => {
         );
       } else {
         const newValues = { ...values, id } as BooksDto;
-        dispatch(editBook({ ...newValues, image }));
+        newValues.publishingDate = dayjs(newValues.publishingDate)
+          .year()
+          .toString();
+        newValues.releaseDate = dayjs(newValues.releaseDate).year().toString();
+        dispatch(
+          editBook({
+            ...newValues,
+            image,
+          })
+        );
       }
     }
   };
 
   useEffect(() => {
-    console.log(dayjs(publishingDate, 'YYYY'));
     form.setFieldValue('title', title);
     form.setFieldValue('numberOfPages', numberOfPages);
     form.setFieldValue('publishingHouse', publishingHouse);
     form.setFieldValue('isbn', isbn);
     form.setFieldValue('authors', authors);
-    form.setFieldValue('publishingDate', dayjs(publishingDate, 'YYYY'));
-    form.setFieldValue('releaseDate', dayjs(releaseDate, 'YYYY'));
+    form.setFieldValue(
+      'publishingDate',
+      publishingDate && dayjs(publishingDate, 'YYYY')
+    );
+    form.setFieldValue(
+      'releaseDate',
+      releaseDate && dayjs(releaseDate, 'YYYY')
+    );
   }, [
     title,
     numberOfPages,

@@ -6,6 +6,10 @@ import { removeBook } from '../../slices/bookSlice';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { Link } from 'react-router-dom';
 
+/**
+ * Компонент отвечает за формирование карточки книги
+ */
+
 export const BookCard: React.FC = (item: BooksDto) => {
   const { authors, numberOfPages, title, image, id } = item;
   const dispatch = useAppDispatch();

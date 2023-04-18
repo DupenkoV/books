@@ -26,6 +26,10 @@ const initialState: StateProps = {
   },
 };
 
+/**
+ * Функция сортировк. Принимает массив книг, строку поля для сортировки и флаг направления.
+ */
+
 function sortBooks(arr: BooksDto[], prop: string, dir = false) {
   let result = arr.sort((a, b) => {
     if ((dir == false ? a[prop] < b[prop] : a[prop] > b[prop]) == true)
