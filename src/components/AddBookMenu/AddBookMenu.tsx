@@ -18,7 +18,8 @@ import { BooksDto } from '../../types';
 import { nanoid } from '@reduxjs/toolkit';
 import { useGetBookById } from '../../hooks/getBookById';
 import dayjs from 'dayjs';
-const isbnIsValid = require('isbn-validator');
+import { isValidIsbn } from './isbnValidationFunc';
+import { LoadingFileButton } from '../LoadingFileButton';
 
 /**
  * Компонент отвечает за меню добавления/редактирования книг. В зависимости от паарметров перехода по роутам, меняется кнопка редактировать/добавить,
@@ -49,6 +50,8 @@ export const AddBookMenu: React.FC = () => {
       Добавить книгу
     </Button>
   );
+
+  const uploadImg = !id ? <LoadingFileButton /> : null;
   /**
    * Функций submit. В зависимости от параметра ID, полученного из URL, выполняет несколько разную логику.
    * При отсутствующем ID выполняется формирование объекта с книгой, присвоение ID и dispatch события addBook. Присваивается картинка-заглушка.
@@ -111,12 +114,14 @@ export const AddBookMenu: React.FC = () => {
     authors,
   ]);
   return (
-    <Col span={24}>
+    <Col span={24} style={{ paddingTop: 40 }}>
+      {uploadImg}
       <Form
         layout="vertical"
         onFinish={onFinish}
         style={{ width: '100%' }}
-        form={form}>
+        form={form}
+        autoComplete="off">
         <Col>
           <Row gutter={16}>
             <Col span={12}>
@@ -180,7 +185,7 @@ export const AddBookMenu: React.FC = () => {
                 rules={[
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || isbnIsValid(value)) {
+                      if (!value || isValidIsbn(value)) {
                         return Promise.resolve();
                       }
                       return Promise.reject();
