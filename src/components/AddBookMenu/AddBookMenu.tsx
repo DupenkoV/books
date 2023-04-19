@@ -18,7 +18,7 @@ import { BooksDto } from '../../types';
 import { nanoid } from '@reduxjs/toolkit';
 import { useGetBookById } from '../../hooks/getBookById';
 import dayjs from 'dayjs';
-const ISBN = require('isbn-validate');
+const isbnIsValid = require('isbn-validator');
 
 /**
  * Компонент отвечает за меню добавления/редактирования книг. В зависимости от паарметров перехода по роутам, меняется кнопка редактировать/добавить,
@@ -49,7 +49,6 @@ export const AddBookMenu: React.FC = () => {
       Добавить книгу
     </Button>
   );
-
   /**
    * Функций submit. В зависимости от параметра ID, полученного из URL, выполняет несколько разную логику.
    * При отсутствующем ID выполняется формирование объекта с книгой, присвоение ID и dispatch события addBook. Присваивается картинка-заглушка.
@@ -88,7 +87,6 @@ export const AddBookMenu: React.FC = () => {
       }
     }
   };
-
   useEffect(() => {
     form.setFieldValue('title', title);
     form.setFieldValue('numberOfPages', numberOfPages);
@@ -174,7 +172,21 @@ export const AddBookMenu: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="ISBN" name="isbn">
+              <Form.Item
+                label="ISBN"
+                name="isbn"
+                validateTrigger="onBlur"
+                validateFirst={true}
+                rules={[
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || isbnIsValid(value)) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject();
+                    },
+                  }),
+                ]}>
                 <Input />
               </Form.Item>
             </Col>

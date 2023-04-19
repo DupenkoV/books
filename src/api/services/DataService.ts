@@ -18,6 +18,12 @@ export class DataService {
       console.log(err);
     }
   }
+
+  // async addBooks() {
+  //   try {
+
+  //   }
+  // }
 }
 
 const checkMode = async (isApiAvailable: boolean) => {
