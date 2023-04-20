@@ -15,7 +15,7 @@ export const useGetBookById = () => {
     return {
       title: '',
       numberOfPages: 1,
-      authors: [],
+      authors: [{ name: undefined, surname: undefined }],
       isbn: '',
       publishingHouse: '',
       publishingDate: '',

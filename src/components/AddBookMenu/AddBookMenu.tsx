@@ -78,6 +78,7 @@ export const AddBookMenu: React.FC = () => {
             image: bookUrl,
           })
         );
+        navigate('/');
       } else {
         const newValues = { ...values, id } as BooksDto;
         newValues.publishingDate = dayjs(newValues.publishingDate)
@@ -90,9 +91,9 @@ export const AddBookMenu: React.FC = () => {
             image,
           })
         );
+        navigate('/');
       }
     }
-    navigate('/');
   };
   useEffect(() => {
     form.setFieldValue('title', title);
@@ -202,7 +203,9 @@ export const AddBookMenu: React.FC = () => {
           </Row>
         </Col>
 
-        <Form.List name={'authors'} initialValue={[{ name: '', surname: '' }]}>
+        <Form.List
+          name={'authors'}
+          initialValue={[{ name: undefined, surname: undefined }]}>
           {(fields, { add, remove }) => {
             return (
               <>
