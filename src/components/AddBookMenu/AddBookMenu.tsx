@@ -10,7 +10,7 @@ import {
   notification,
   Row,
 } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { addBook, editBook } from '../../slices/bookSlice';
 import { useAppDispatch } from '../../hooks/reduxHooks';
@@ -19,7 +19,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useGetBookById } from '../../hooks/getBookById';
 import dayjs from 'dayjs';
 import { isValidIsbn } from './isbnValidationFunc';
-import { LoadingFileButton } from '../LoadingFileButton';
+import { NewButton } from '../LoadingImgButton';
 
 /**
  * Компонент отвечает за меню добавления/редактирования книг. В зависимости от паарметров перехода по роутам, меняется кнопка редактировать/добавить,
@@ -38,9 +38,12 @@ export const AddBookMenu: React.FC = () => {
     id,
     authors,
   } = useGetBookById();
-  const [bookUrl, setBookUrl] = useState('');
+  const [bookUrl, setBookUrl] = useState(
+    'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640'
+  );
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const button = id ? (
     <Button type="primary" htmlType="submit" style={{ marginTop: 40 }}>
@@ -52,7 +55,7 @@ export const AddBookMenu: React.FC = () => {
     </Button>
   );
 
-  const uploadImg = !id ? <LoadingFileButton setBookUrl={setBookUrl} /> : null;
+  const uploadImg = !id ? <NewButton setBookUrl={setBookUrl} /> : null;
   /**
    * Функций submit. В зависимости от параметра ID, полученного из URL, выполняет несколько разную логику.
    * При отсутствующем ID выполняется формирование объекта с книгой, присвоение ID и dispatch события addBook. Присваивается картинка-заглушка.
@@ -72,9 +75,7 @@ export const AddBookMenu: React.FC = () => {
         dispatch(
           addBook({
             ...newValues,
-            image:
-              bookUrl ||
-              'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640',
+            image: bookUrl,
           })
         );
       } else {
@@ -91,6 +92,7 @@ export const AddBookMenu: React.FC = () => {
         );
       }
     }
+    navigate('/');
   };
   useEffect(() => {
     form.setFieldValue('title', title);

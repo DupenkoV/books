@@ -16,7 +16,7 @@ export const BookCard: React.FC = (item: BooksDto) => {
 
   return (
     <Card title={title} bordered={true} style={{ width: 350, height: 460 }}>
-      <Image src={image} height={200} alt="book" />
+      <Image src={image} height={200} max-width={300} alt="book" />
       <p>{title}</p>
       <p>{numberOfPages + ' стр'}</p>
       <p>{`${authors[0].name} ${authors[0].surname}`}</p>
