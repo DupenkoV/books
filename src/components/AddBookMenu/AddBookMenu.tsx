@@ -56,6 +56,10 @@ export const AddBookMenu: React.FC = () => {
   );
 
   const uploadImg = !id ? <NewButton setBookUrl={setBookUrl} /> : null;
+
+  const formatedDate = date => {
+    return isNaN(dayjs(date).year()) ? '' : dayjs(date).year().toString();
+  };
   /**
    * Функций submit. В зависимости от параметра ID, полученного из URL, выполняет несколько разную логику.
    * При отсутствующем ID выполняется формирование объекта с книгой, присвоение ID и dispatch события addBook. Присваивается картинка-заглушка.
@@ -68,10 +72,8 @@ export const AddBookMenu: React.FC = () => {
           ...values,
           id: nanoid(),
         } as BooksDto;
-        newValues.publishingDate = dayjs(newValues.publishingDate)
-          .year()
-          .toString();
-        newValues.releaseDate = dayjs(newValues.releaseDate).year().toString();
+        newValues.publishingDate = formatedDate(newValues.publishingDate);
+        newValues.releaseDate = formatedDate(newValues.releaseDate);
         dispatch(
           addBook({
             ...newValues,
@@ -81,10 +83,8 @@ export const AddBookMenu: React.FC = () => {
         navigate('/');
       } else {
         const newValues = { ...values, id } as BooksDto;
-        newValues.publishingDate = dayjs(newValues.publishingDate)
-          .year()
-          .toString();
-        newValues.releaseDate = dayjs(newValues.releaseDate).year().toString();
+        newValues.publishingDate = formatedDate(newValues.publishingDate);
+        newValues.releaseDate = formatedDate(newValues.releaseDate);
         dispatch(
           editBook({
             ...newValues,
