@@ -8,3 +8,4 @@ export * from './AddBookCard';
 export * from './AddBookMenu';
 export * from './sortButtons';
 export * from './LoadingFileButton';
+export * from './newButton';

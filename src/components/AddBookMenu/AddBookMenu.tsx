@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Col,
@@ -38,6 +38,7 @@ export const AddBookMenu: React.FC = () => {
     id,
     authors,
   } = useGetBookById();
+  const [bookUrl, setBookUrl] = useState('');
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
@@ -51,7 +52,7 @@ export const AddBookMenu: React.FC = () => {
     </Button>
   );
 
-  const uploadImg = !id ? <LoadingFileButton /> : null;
+  const uploadImg = !id ? <LoadingFileButton setBookUrl={setBookUrl} /> : null;
   /**
    * Функций submit. В зависимости от параметра ID, полученного из URL, выполняет несколько разную логику.
    * При отсутствующем ID выполняется формирование объекта с книгой, присвоение ID и dispatch события addBook. Присваивается картинка-заглушка.
@@ -72,7 +73,8 @@ export const AddBookMenu: React.FC = () => {
           addBook({
             ...newValues,
             image:
-              'https://dentsg.pro/upload/resize_cache/iblock/6da/cp3qr9pebsoy253ssylnab9nqdlst5ti/800_800_182890484cc09cf4497c75dc9df68fb58/SHlang-dlya-podklyucheniya-DP_2.04-dlya-mikromotora.jpg',
+              bookUrl ||
+              'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640',
           })
         );
       } else {

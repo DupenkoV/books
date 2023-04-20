@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack serve --mode development --progress --hot --config ./webpack.config.development.js",
     "build": "webpack --mode production --config ./webpack.config.production.js",
-    "workerInit": "npx msw init .dist --save"
+    "workerInit": "npx msw init dist --save"
   },
   "keywords": [
     "react",
