@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
+import { FormInstance, UploadProps } from 'antd';
 import { Button, Upload, Image } from 'antd';
 
 interface NewButtonProps {
-  setBookUrl: (url: string) => void;
+  form: FormInstance<any>;
+  image: string;
 }
 
-export const NewButton: React.FC<NewButtonProps> = ({ setBookUrl }) => {
+export const NewButton: React.FC<NewButtonProps> = ({
+  image = 'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640',
+  form,
+}) => {
   const [urlBook, setUrlBook] = useState(
     'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640'
   );
@@ -23,11 +27,18 @@ export const NewButton: React.FC<NewButtonProps> = ({ setBookUrl }) => {
       })
         .then(res => res.json())
         .then(data => {
-          setBookUrl(data.data.url);
           setUrlBook(data.data.url);
         });
     },
   };
+
+  useEffect(() => {
+    if (image.length > 0) setUrlBook(image);
+  }, [image]);
+
+  useEffect(() => {
+    form.setFieldValue('image', urlBook);
+  }, [urlBook]);
   return (
     <>
       <Upload {...props}>

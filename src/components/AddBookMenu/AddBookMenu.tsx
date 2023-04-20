@@ -4,7 +4,6 @@ import {
   Col,
   DatePicker,
   Form,
-  FormInstance,
   Input,
   InputNumber,
   notification,
@@ -38,6 +37,7 @@ export const AddBookMenu: React.FC = () => {
     id,
     authors,
   } = useGetBookById();
+
   const [bookUrl, setBookUrl] = useState(
     'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640'
   );
@@ -55,8 +55,9 @@ export const AddBookMenu: React.FC = () => {
     </Button>
   );
 
-  const uploadImg = !id ? <NewButton setBookUrl={setBookUrl} /> : null;
-
+  /**
+   * Функция возвращает дату, форматированную в строку. Или присваивает пустую в случаях, когда пользователь не заполнил поле даты.
+   */
   const formatedDate = date => {
     return isNaN(dayjs(date).year()) ? '' : dayjs(date).year().toString();
   };
@@ -77,7 +78,6 @@ export const AddBookMenu: React.FC = () => {
         dispatch(
           addBook({
             ...newValues,
-            image: bookUrl,
           })
         );
         navigate('/');
@@ -88,7 +88,6 @@ export const AddBookMenu: React.FC = () => {
         dispatch(
           editBook({
             ...newValues,
-            image,
           })
         );
         navigate('/');
@@ -117,16 +116,19 @@ export const AddBookMenu: React.FC = () => {
     publishingDate,
     releaseDate,
     authors,
+    image,
   ]);
   return (
     <Col span={24} style={{ paddingTop: 40 }}>
-      {uploadImg}
       <Form
         layout="vertical"
         onFinish={onFinish}
         style={{ width: '100%' }}
         form={form}
         autoComplete="off">
+        <Form.Item name="image">
+          <NewButton image={image} form={form} />
+        </Form.Item>
         <Col>
           <Row gutter={16}>
             <Col span={12}>
