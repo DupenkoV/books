@@ -2,13 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BooksDto } from '../types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { DataService } from '../api/services/DataService';
+import { api } from '../api/api';
 
 const dataService = new DataService();
 
 export const fetchBooks = createAsyncThunk('@@books/fetchBooks', async () => {
-  const books = await dataService.getBooks();
-
-  return books;
+  // const books = await dataService.getBooks();
+  const books = await api.get('/books');
+  return books.data;
 });
 
 interface StateProps {

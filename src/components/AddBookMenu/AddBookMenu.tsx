@@ -19,6 +19,7 @@ import { useGetBookById } from '../../hooks/getBookById';
 import dayjs from 'dayjs';
 import { isValidIsbn } from './isbnValidationFunc';
 import { NewButton } from '../LoadingImgButton';
+import { api } from '../../api/api';
 
 /**
  * Компонент отвечает за меню добавления/редактирования книг. В зависимости от паарметров перехода по роутам, меняется кнопка редактировать/добавить,
@@ -37,7 +38,7 @@ export const AddBookMenu: React.FC = () => {
     id,
     authors,
   } = useGetBookById();
-
+  console.log(title);
   const [bookUrl, setBookUrl] = useState(
     'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640'
   );
@@ -75,21 +76,49 @@ export const AddBookMenu: React.FC = () => {
         } as BooksDto;
         newValues.publishingDate = formatedDate(newValues.publishingDate);
         newValues.releaseDate = formatedDate(newValues.releaseDate);
-        dispatch(
-          addBook({
-            ...newValues,
-          })
-        );
+
+        (async function () {
+          try {
+            const response = await api.post('/books/add', {
+              body: newValues,
+            });
+            if (response.status === 200) {
+              dispatch(
+                addBook({
+                  ...newValues,
+                })
+              );
+
+              notification.open({ message: response.data });
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        })();
         navigate('/');
       } else {
         const newValues = { ...values, id } as BooksDto;
         newValues.publishingDate = formatedDate(newValues.publishingDate);
         newValues.releaseDate = formatedDate(newValues.releaseDate);
-        dispatch(
-          editBook({
-            ...newValues,
-          })
-        );
+
+        (async function () {
+          try {
+            const response = await api.put(`/books/${id}/edit`, {
+              body: newValues,
+            });
+            if (response.status === 200) {
+              dispatch(
+                editBook({
+                  ...newValues,
+                })
+              );
+
+              notification.open({ message: response.data });
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        })();
         navigate('/');
       }
     }

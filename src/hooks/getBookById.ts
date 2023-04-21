@@ -1,7 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './reduxHooks';
-import { addBooks, getBookDetails } from '../slices/bookSlice';
+import { addBook, addBooks, getBookDetails } from '../slices/bookSlice';
+import { api } from '../api/api';
+import { notification } from 'antd';
 
 /**
  * Хук отвечает за отправку параметра ID из URL в store и получения детальной информации по книге.
@@ -11,6 +13,7 @@ import { addBooks, getBookDetails } from '../slices/bookSlice';
 
 export const useGetBookById = () => {
   const { id } = useParams();
+  const location = useLocation();
   if (id === 'addNewBook')
     return {
       title: '',
@@ -33,7 +36,20 @@ export const useGetBookById = () => {
    */
   useEffect(() => {
     dispatch(addBooks(JSON.parse(window.localStorage.getItem('booksList'))));
-    dispatch(getBookDetails(id));
+
+    if (location.pathname.includes('details')) {
+      (async function () {
+        try {
+          const response = await api.get(`/books/${id}`);
+
+          if (response.status === 200) {
+            dispatch(getBookDetails(id));
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
   }, []);
   return book;
 };
