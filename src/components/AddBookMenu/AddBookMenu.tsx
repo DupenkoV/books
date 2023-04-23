@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Col,
@@ -38,10 +38,7 @@ export const AddBookMenu: React.FC = () => {
     id,
     authors,
   } = useGetBookById();
-  console.log(title);
-  const [bookUrl, setBookUrl] = useState(
-    'https://www.wolflair.com/wp-content/uploads/2017/02/placeholder.jpg?w=640'
-  );
+
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const navigate = useNavigate();
