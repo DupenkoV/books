@@ -37,19 +37,17 @@ export const useGetBookById = () => {
   useEffect(() => {
     dispatch(addBooks(JSON.parse(window.localStorage.getItem('booksList'))));
 
-    if (location.pathname.includes('details')) {
-      (async function () {
-        try {
-          const response = await api.get(`/books/${id}`);
+    (async function () {
+      try {
+        const response = await api.get(`/books/${id}`);
 
-          if (response.status === 200) {
-            dispatch(getBookDetails(id));
-          }
-        } catch (error) {
-          console.error(error);
+        if (response.status === 200) {
+          dispatch(getBookDetails(id));
         }
-      })();
-    }
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   }, []);
   return book;
 };
